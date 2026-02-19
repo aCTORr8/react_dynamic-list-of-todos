@@ -59,7 +59,7 @@ export const TodoModal: React.FC<Props> = React.memo(
       <div className="modal is-active" data-cy="modal">
         <div className="modal-background" />
 
-        {isLoadingUser || !user || loadedTodoId !== selectedTodo.id ? (
+        {isLoadingUser ? (
           <Loader />
         ) : error ? (
           <div className="modal-card">
@@ -73,7 +73,7 @@ export const TodoModal: React.FC<Props> = React.memo(
               <p className="notification is-danger">{error}</p>
             </div>
           </div>
-        ) : (
+        ) : user && loadedTodoId === selectedTodo.id ? (
           <div className="modal-card">
             <header className="modal-card-head">
               <div
@@ -106,11 +106,11 @@ export const TodoModal: React.FC<Props> = React.memo(
 
                 {' by '}
 
-                {user && <a href={`mailto:${user.email}`}>{user.name}</a>}
+                <a href={`mailto:${user.email}`}>{user.name}</a>
               </p>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     );
   },

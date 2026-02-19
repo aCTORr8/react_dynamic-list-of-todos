@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { Todo } from '../../types/Todo';
 
 interface Props {
@@ -28,7 +29,9 @@ export const TodoList: React.FC<Props> = React.memo(
           <tr
             key={todo.id}
             data-cy="todo"
-            className={todo.completed ? 'has-background-info-light' : ''}
+            className={cx({
+              'has-background-info-light': todo.completed,
+            })}
           >
             <td className="is-vcentered">{todo.id}</td>
             <td className="is-vcentered">
@@ -40,9 +43,10 @@ export const TodoList: React.FC<Props> = React.memo(
             </td>
             <td className="is-vcentered is-expanded">
               <p
-                className={
-                  todo.completed ? 'has-text-success' : 'has-text-danger'
-                }
+                className={cx({
+                  'has-text-success': todo.completed,
+                  'has-text-danger': !todo.completed,
+                })}
               >
                 {todo.title}
               </p>
@@ -56,11 +60,10 @@ export const TodoList: React.FC<Props> = React.memo(
               >
                 <span className="icon">
                   <i
-                    className={
-                      selectedTodo?.id === todo.id
-                        ? 'far fa-eye-slash'
-                        : 'far fa-eye'
-                    }
+                    className={cx('far', {
+                      'fa-eye-slash': selectedTodo?.id === todo.id,
+                      'fa-eye': selectedTodo?.id !== todo.id,
+                    })}
                   />
                 </span>
               </button>
